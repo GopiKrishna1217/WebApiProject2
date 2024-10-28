@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +29,7 @@ namespace WebApiProject.Controllers
         {
             try
             {
-                var Users = await _context.UsersDetails.ToListAsync();
+                var Users = await _context.Users.ToListAsync();
                 return Ok(Users);
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@ namespace WebApiProject.Controllers
         {
             try
             {
-                var Users = await _context.UsersDetails.FindAsync(Id);
+                var Users = await _context.Users.FindAsync(Id);
                 return Ok(Users);
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace WebApiProject.Controllers
         [HttpPut("id")]
         public async Task<IActionResult> UpdateUser(int id,User user)
         {
-            var currentUser = await _context.UsersDetails.FindAsync(id);
+            var currentUser = await _context.Users.FindAsync(id);
             if(currentUser == null)
             {
                 return NotFound("User Not Existed in Database");
@@ -70,12 +70,12 @@ namespace WebApiProject.Controllers
         [HttpDelete("id")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var currentUser = await _context.UsersDetails.FindAsync(id);
+            var currentUser = await _context.Users.FindAsync(id);
             if (currentUser == null)
             {
                 return NotFound("User Not Existed in Database");
             }
-           _context.UsersDetails.Remove(currentUser);
+           _context.Users.Remove(currentUser);
             await _context.SaveChangesAsync();
             return Ok("Deleted Succesfully");
         }
